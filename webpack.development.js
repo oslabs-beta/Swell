@@ -1,13 +1,16 @@
+require('dotenv').config();
 const merge = require('webpack-merge').merge;
 const base = require('./webpack.config');
 const { spawn } = require('child_process');
+const DEFAULT_PORT = 8080; // Default port
+const PORT = process.env.PORT || DEFAULT_PORT;
 
 module.exports = merge(base, {
   mode: 'development',
   devtool: 'source-map',
   devServer: {
     host: '127.0.0.1',
-    port: '8080',
+    port: PORT,
     open: '/dev',
     hot: true,
     compress: true,
@@ -38,7 +41,7 @@ module.exports = merge(base, {
         middleware: (req, res) => {
           spawn('npx electron --dev .', {
             shell: true,
-            env: process.env,
+            env: { ...process.env, PORT },
             stdio: 'inherit',
           })
             .on('close', () => process.exit(130))

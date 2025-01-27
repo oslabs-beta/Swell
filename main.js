@@ -1,5 +1,6 @@
 // https://github.com/electron/electron/issues/10257
 // Code fix to support NODE_EXTRA_CA_CERTS env. There is currently no other fixes to the NODE_TLS_REJECT_UNAUTHORIZED at the moment.
+require('dotenv').config();
 
 (function () {
   if (!process.env.NODE_EXTRA_CA_CERTS) return;
@@ -52,6 +53,8 @@ const path = require('path');
 const url = require('url');
 const fs = require('fs');
 const log = require('electron-log');
+const DEFAULT_PORT = 8080; // Default port
+const PORT = process.env.PORT || DEFAULT_PORT;
 
 // React dev tools current version 28 is not compatible with electron because it relys on
 // scripts, this may be fixed in the future but for now this gives us the 27 version of the
@@ -153,7 +156,7 @@ function createWindow() {
     // if we are in dev mode load 'http://localhost:8080/index.html'
     indexPath = url.format({
       protocol: 'http:',
-      host: 'localhost:8080',
+      host: `localhost:${PORT}`,
       pathname: 'index.html',
       slashes: true,
     });
