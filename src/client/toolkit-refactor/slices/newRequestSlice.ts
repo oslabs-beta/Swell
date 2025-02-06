@@ -105,6 +105,9 @@ const newRequestSlice = createSlice({
     newRequestWebRTCOfferSet: (state, action: PayloadAction<string>) => {
       state.newRequestWebRTC.webRTCOffer = action.payload;
     },
+    newRequestWebRTCAnswerSet: (state, action: PayloadAction<string>) => {
+      state.newRequestWebRTC.webRTCAnswer = action.payload;
+    },
 
 
     //Before toolkit conversion was SET_NEW_REQUEST_STREAMS or setNewRequestStreams

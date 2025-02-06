@@ -36,7 +36,7 @@ const webrtcPeerController = {
         video: true,
         audio: false,
       });
- 
+
       if (document.getElementById('localstream')) {
         (<HTMLVideoElement>document.getElementById('localstream')).srcObject =
           localStream;
@@ -98,14 +98,12 @@ const webrtcPeerController = {
       peerConnection.onicecandidate = async (
         event: RTCPeerConnectionIceEvent
       ): Promise<void> => {
-        if (event.candidate) {
+        if (event.candidate ) {
           appDispatch(
             newRequestWebRTCOfferSet(
               JSON.stringify(peerConnection.localDescription)
             )
           );
-           console.log('eventIceCandidate:', event.candidate.candidate)
-           
         }
       };
 
@@ -117,16 +115,13 @@ const webrtcPeerController = {
     let { webRTCpeerConnection } = newRequestWebRTC;
     console.log('webRTCPeerConnect:', webRTCpeerConnection)
     let offer = await webRTCpeerConnection!.createOffer();
-    console.log('offer:', offer)
     await webRTCpeerConnection!.setLocalDescription(offer); //what is this line doing that is not already done?
-    console.log('webRTCaftersetofLocalDes:', webRTCpeerConnection)
     appDispatch(
       newRequestWebRTCSet({           // newRequestWebRTCSet mutates the newRequestWebRTC state to have the offer
         ...newRequestWebRTC,
         webRTCOffer: JSON.stringify(offer),
       })
     );
-    console.log('newRequestWebRTCCheckAfterOffer:', newRequestWebRTC)
   },
 
   createAnswer: async (newRequestWebRTC: RequestWebRTC): Promise<void> => {
@@ -156,7 +151,6 @@ const webrtcPeerController = {
 
   sendMessages: async (reqRes: ReqRes, messages: string): Promise<void> => {
     let { request } = reqRes as { request: RequestWebRTCText };
-    console.log('im here too');
     console.log('request from mesaages :', request);
     
     (<RequestWebRTCText>request).webRTCLocalStream!.send(
@@ -171,10 +165,6 @@ const webrtcPeerController = {
       request: RequestWebRTC;
       response: ResponseWebRTC;
     };
-
-    // request.webRTCpeerConnection!.setRemoteDescription(
-    //   JSON.parse(request.webRTCAnswer)
-    // );
 
     if (request.webRTCDataChannel === 'Video') {
       request.webRTCpeerConnection!.ontrack = async (event: RTCTrackEvent) => {
