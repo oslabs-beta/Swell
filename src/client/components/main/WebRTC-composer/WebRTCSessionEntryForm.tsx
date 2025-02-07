@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { NewRequestWebRTCSet, RequestWebRTC } from '../../../../types';
+import { NewRequestWebRTCSet, RequestWebRTC,  ReqRes, } from '../../../../types';
 import webrtcPeerController from '../../../controllers/webrtcPeerController';
 
 import dropDownArrow from '../../../../assets/icons/arrow_drop_down_white_192x192.png';
@@ -16,6 +16,9 @@ const WebRTCSessionEntryForm: React.FC<Props> = (props: Props) => {
   const newRequestWebRTC: RequestWebRTC = useAppSelector(
     (store: RootState) => store.newRequest.newRequestWebRTC
   );
+  const currentReqRes = useAppSelector(
+    (store: RootState) => store.reqRes.currentResponse
+  ) as ReqRes;
 
   const isDark = useAppSelector((store: { ui: { isDark: boolean }}) => store.ui.isDark);
 
@@ -135,7 +138,7 @@ const WebRTCSessionEntryForm: React.FC<Props> = (props: Props) => {
             onClick={() => {
               setShowRTCEntryForms(true);
               console.log('newRequestWebRTCFromConnect:', { newRequestWebRTC: newRequestWebRTC });
-              webrtcPeerController.createPeerConnection(newRequestWebRTC);
+              webrtcPeerController.createPeerConnection(newRequestWebRTC, currentReqRes);
             }}
           >
             Connect
