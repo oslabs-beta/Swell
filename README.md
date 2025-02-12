@@ -21,6 +21,7 @@ Swell is a one-stop shop for sending and monitoring your API requests:
 
 - Send and monitor streams over HTTP/2 (including SSEs) and WebSockets
 - Create GraphQL queries, introspections, mutations, and subscriptions
+- Test WebRTC applications over video and text channels
 - Stress testing HTTP/2 and GraphQL endpoints
 - Create your own HTTP/2 mock server
 - Store workspaces of multiple requests for later use
@@ -110,7 +111,7 @@ We highly encourage you to check out the `DEV-README.md` in the `docs` folder. W
 - React
 - React Router
 - Material UI
-- Redux
+- Redux Toolkit
 - Apollo Client
 - Websockets
 - gRPC-js
@@ -124,6 +125,11 @@ We highly encourage you to check out the `DEV-README.md` in the `docs` folder. W
 - Playwright
 
 ## Authors
+- **Isaac Mbambo** - [IM236](https://github.com/IM236)
+- **Kiki Hunt** - [Iloveeverything](https://github.com/Iloveeverything)
+- **Ting Lee** - [tingEng](https://github.com/tingEng)
+- **Rachel Dean** - [rchldn](https://github.com/rchldn)
+- **Kadeem Reid** - [Kadeem929](https://github.com/Kadeem929)
 - **Karol Krzywon** - [kkrzywon](https://github.com/kkrzywon)
 - **Howard Sun** - [howardCodeGit](https://github.com/howardCodeGit)
 - **Carter Sarkela** - [CarterSarkela](https://github.com/CarterSarkela)

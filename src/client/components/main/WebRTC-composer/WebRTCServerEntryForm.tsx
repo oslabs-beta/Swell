@@ -58,17 +58,17 @@ const WebRTCServerEntryForm: React.FC<Props> = () => {
   const audioRef = useRef<HTMLAudioElement | null>(null);
   // creates reference html audio element
   //  where useRef persists values across renders without causing rerenders //initally set to null
-  // useEffect(() => {
-  //   // play audio when conditions are met
-  //   if (newRequestWebRTC.webRTCLocalStream && audioRef.current) {
-  //     // if local stream and current audio arent null
-  //     console.log('Local Mic Playing...');
-  //     audioRef.current.srcObject = newRequestWebRTC.webRTCLocalStream; // sets source of media to local stream
-  //     audioRef.current
-  //       .play()
-  //       .catch((e) => console.warn('Electron Autoplay Issue', e)); // attempts to play it
-  //   } // if error indicates it may be an issues with electron audioplayback vs video with audio
-  // }, [newRequestWebRTCSet.webRTCLocalStream]); // use effect runs whenever local stream changes
+  useEffect(() => {
+    // play audio when conditions are met
+    if (newRequestWebRTC.webRTCLocalStream && audioRef.current) {
+      // if local stream and current audio arent null
+      console.log('Local Mic Playing...');
+      audioRef.current.srcObject = newRequestWebRTC.webRTCLocalStream; // sets source of media to local stream
+      audioRef.current
+        .play()
+        .catch((e) => console.warn('Electron Autoplay Issue', e)); // attempts to play it
+    } // if error indicates it may be an issues with electron audioplayback vs video with audio
+  }, [newRequestWebRTCSet.webRTCLocalStream]); // use effect runs whenever local stream changes
 
   return (
     <div className="mt-3">
