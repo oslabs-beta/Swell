@@ -100,7 +100,28 @@ We highly encourage you to check out the `DEV-README.md` in the `docs` folder. W
 
 - _Webhooks_: Swell includes user-defined HTTP callback connection testing designed to test other server's connection to the web and ability to send data. The test insures that when an event occurs, the source site makes an HTTP request to the URL configured for the webhook.
 
-- _WebRTC_: Swell makes it easy to test WebRTC applications for both video and text channels. Currently Swell supports manual entry of SDPs.
+- _WebRTC_: Swell makes it easy to test WebRTC applications for video, audio and text channels. Currently Swell supports manual entry of SDPs.
+
+### Here are the steps of text testing:
+
+- Step 1
+  Caller : Generate an offer by clicking “Get Offer”. Copy to clipboard, paste and send to recipient (email recommended)
+- Step 2
+  Recipient: Copy offer received and paste into the top box
+- Step 3
+  Recipient: Click “get answer” button, generate an answer and copy to clipboard. Send answer to caller (email recommended)
+- Step 4
+  Caller: Copy answer to clipboard and paste into lower box.
+- Step 5
+  Caller: Click “add answer” button. Connection will open!
+- Step 6
+  Caller: Click “add to workspace” Button
+- Step 7
+  Recipient: Click “add to workspace” Button
+- Step 8
+  Caller: Click Send Button at the left side
+- Step 9
+  Recipient: Click Send Button at the left side
   <img src="./ReadMeGifs/Gifs/webrtc.gif" style="display: block; margin: 10px auto 30px; " />
 
 - _OpenAPI_: Swell supports the enumeration and execution of REST and RPC API requests as defined in a user-provided OpenAPI document.
