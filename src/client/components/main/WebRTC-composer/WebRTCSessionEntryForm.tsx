@@ -77,8 +77,8 @@ const WebRTCSessionEntryForm: React.FC<Props> = (props: Props) => {
                 Manual
               </a>
             )}
-
-            {newRequestWebRTC.webRTCEntryMode !== 'WS' && (
+  
+            {/* {newRequestWebRTC.webRTCEntryMode !== 'WS' && (
               <a
                 onClick={() => {
                   dispatch(newRequestWebRTCSet({
@@ -91,7 +91,7 @@ const WebRTCSessionEntryForm: React.FC<Props> = (props: Props) => {
               >
                 WS
               </a>
-            )}
+            )} */}
           </ul>
         </div>
         <input
@@ -99,6 +99,12 @@ const WebRTCSessionEntryForm: React.FC<Props> = (props: Props) => {
           isDark ? 'dark-address-input' : ''
         } ml-1 input input-is-medium is-info`}
           type="text"
+          value={newRequestWebRTC.webRTCWebsocketServer || ''}
+          onChange={(e) => {
+            dispatch(newRequestWebRTCSet({
+              ...newRequestWebRTC,
+              webRTCWebsocketServer: e.target.value,
+            }))}}
           placeholder={
             newRequestWebRTC.webRTCEntryMode === 'Manual'
               ? 'No Server Required'
@@ -147,21 +153,23 @@ const WebRTCSessionEntryForm: React.FC<Props> = (props: Props) => {
         <div className="dropdown-menu" id="dropdown-menu">
           <ul className="dropdown-content">
             {/* AUDIO RTC Channel is Work-In-Progress */}
-            {/* {newRequestWebRTC.webRTCDataChannel !== 'Audio' && (
+            {newRequestWebRTC.webRTCDataChannel !== 'Audio' && (
               <a
-                onClick={() => {
+              onClick={() => {
+                dispatch(
                   newRequestWebRTCSet({
                     ...newRequestWebRTC,
                     webRTCDataChannel: 'Audio',
-                  });
-                  setShowRTCEntryForms(false);
-                  setDataTypeDropdownIsActive(false);
-                }}
+                  } as RequestWebRTC)
+                );
+                setShowRTCEntryForms(false);
+                setDataTypeDropdownIsActive(false);
+              }}
                 className="dropdown-item"
               >
                 Audio
               </a>
-            )} */}
+            )}
             {newRequestWebRTC.webRTCDataChannel !== 'Video' && (
               <a
                 onClick={() => {

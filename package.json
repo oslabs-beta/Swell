@@ -142,7 +142,7 @@
     "isolated-vm": "^5.0.3",
     "jest-environment-jsdom": "^29.7.0",
     "mali": "^0.46.1",
-    "ngrok": "^4.3.1",
+    "ngrok": "^4.3.3",
     "node-fetch": "^3.3.0",
     "node-gyp": "^11.0.0",
     "npm": "^8.7.0",

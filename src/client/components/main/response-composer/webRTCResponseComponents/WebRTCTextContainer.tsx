@@ -64,12 +64,12 @@ const WebRTCTextContainer = () => {
     );
     // console.log('request:', request);
     // console.log('currentReqRes:', currentReqRes);
-    webrtcPeerController.sendMessages(currentReqRes, messageInput);
+    // webrtcPeerController.sendMessages(currentReqRes, messageInput);
     (
       document.getElementById('webrtc-message-input') as HTMLInputElement
     ).value = '';
     if (request.webRTCLocalStream) {
-      request.webRTCLocalStream.send(JSON.stringify(messageInput));
+      request.webRTCLocalStream.send(JSON.stringify(messageInput)); // are the messages sent twice?
       console.log('message input:', messageInput);
     }
   };

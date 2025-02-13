@@ -6,7 +6,7 @@ const cookieParser = require('cookie-parser');
 const crypto = require('crypto');
 dotenv.config();
 
-const port = 3001;
+const port = 3000;
 const app = express();
 const cors = require('cors');
 app.use(express.urlencoded({ extended: true }));
@@ -45,17 +45,57 @@ const io = require('socket.io')(server, {
   },
 });
 
+// try {
+//   const url = ngrok.connect({
+//     proto: 'http',
+//     addr: port
+//   });
+//   console.log(`ngrok tunnel opened at: ${url}`);
+//   client.emit('ngrokUrl', url);
+// } catch (err) {
+//   console.error('Failed to create ngrok tunnel:', err);
+// }
+
 // if u want to use routers, set socket io then google the rest
 // https://stackoverflow.com/questions/47249009/nodejs-socket-io-in-a-router-page
+
 app.set('socketio', io);
 
-io.on('connection', (client) => {
+io.on('connection',(client) => {
   console.log('established websocket connection');
 
   client.on('message', (message) => {
     console.log('message received: ', message);
   });
+  client.on('offer', (message) => {
+    console.log('offer received: ', message);
+  });
+  client.on('answer', (message) => {
+    console.log('answer received: ', message);
+  });
 });
+
+// io.on('connection', async (client) => {
+  // try {
+  //   const url = await ngrok.connect({
+  //     proto: 'http',
+  //     addr: port
+  //   });
+  //   console.log(`ngrok tunnel opened at: ${url}`);
+  //   client.emit('ngrokUrl', url);
+  // } catch (err) {
+  //   console.error('Failed to create ngrok tunnel:', err);
+  // }
+// });
+// ngrok
+//     .connect({
+//       proto: 'http',
+//       addr: '3000',
+//     })
+//     .then((url) => {
+//       console.log(`ngrok tunnel opened at: ${url}`);
+//       return res.status(200).json(url);
+//     });
 
 /** @todo previous groups decided to use ngrok to add live collaboration session but could not finished */
 app.post('/webhookServer', (req, res) => {
@@ -108,5 +148,13 @@ app.use((err, _req, res, _next) => {
   res.status(errorObj.status).json(errorObj.message);
 });
 
-server.listen(port, () => console.log(`Listening on port ${port}`));
+server.listen(port, () => {
+  
+  console.log(`Listening on port ${port}`)
+  ngrok.connect({
+  proto: 'http',
+  addr: port
+}).then(url => console.log(`ngrok tunnel opened at: ${url}`)).catch(err => console.error('Failed to create ngrok tunnel:', err));
+
+});
 

@@ -13,13 +13,13 @@ module.exports = merge(base, {
     compress: true,
     proxy: {
       '/webhookServer': {
-        target: 'http://localhost:3001',
+        target: 'http://localhost:3000',
       },
       '/webhook': {
-        target: 'http://localhost:3001',
+        target: 'http://localhost:3000',
       },
       '/api': {
-        target: 'http://localhost:3001',
+        target: 'http://localhost:3000',
         /**
          * @todo Change secure option to true, and refactor code to account for
          * change  // https://github.com/electron/electron/issues/19775 ??? maybe this is the solution

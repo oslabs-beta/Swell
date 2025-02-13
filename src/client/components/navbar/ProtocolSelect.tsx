@@ -73,12 +73,12 @@ const pages: page[] = [
   { name: 'WebSocket', route: '/websocket', value: 'ws' },
   { name: 'gRPC', route: '/grpc', value: 'grpc' },
   { name: 'tRPC', route: '/trpc', value: 'tRPC' },
+  { name: 'WebRTC', route: '/webrtc', value: 'webrtc' },
 ];
 
 const experimentalPages: page[] = [
   { name: 'Mock', route: '/mockserver', value: 'mockserver' },
   { name: 'Webhook', route: '/webhook', value: 'webhook' },
-  { name: 'WebRTC', route: '/webrtc', value: 'webrtc' },
   { name: 'OpenAPI', route: '/openapi', value: 'openapi' },
 ];
 

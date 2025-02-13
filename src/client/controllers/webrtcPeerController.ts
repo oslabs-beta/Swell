@@ -1,4 +1,6 @@
-import store, { appDispatch, } from '../toolkit-refactor/store';
+import store, { appDispatch } from '../toolkit-refactor/store';
+import { io } from 'socket.io-client';
+import ngrok from 'ngrok';
 import {
   newRequestWebRTCSet,
   newRequestWebRTCOfferSet,
@@ -12,10 +14,9 @@ import {
   ResponseWebRTCText,
 } from '../../types';
 import { responseDataSaved } from '../toolkit-refactor/slices/reqResSlice';
-import { send } from 'process';
+// import { send } from 'process';
+// import { connect } from 'http2';
 const webrtcPeerController = {
-
-  
   createPeerConnection: async (
     newRequestWebRTC: RequestWebRTC,
     currentReqRes: ReqRes
@@ -28,13 +29,37 @@ const webrtcPeerController = {
       ],
     };
     let peerConnection = new RTCPeerConnection(servers);
+    
+    // let wsIp = newRequestWebRTC.webRTCWebsocketServer;
+    // const socket = io('http://localhost:3000');
+
+    // socket.on('connect', async () => {
+    //       // try {
+    //       //   const url = await ngrok.connect({
+    //       //     proto: 'http',
+    //       //     addr: 3000,
+    //       //   });
+    //       //   console.log(`ngrok tunnel opened at: ${url}`);
+    //       //   // client.emit('ngrokUrl', url);
+    //       // } catch (err) {
+    //       //   console.error('Failed to create ngrok tunnel:', err);
+    //       // }
+    //   console.log('Connected to server');
+    // });
+
+    // socket.on('disconnect', () => {
+    //   console.log('Disconnected from server');
+    // });
+
+    // socket.on('message', (message: string) => {
+    //   console.log('Message:', message);
+    // });
 
     if (newRequestWebRTC.webRTCDataChannel === 'Video') {
       let localStream = await navigator.mediaDevices.getUserMedia({
         video: true,
         audio: false,
       });
-
 
       if (document.getElementById('localstream')) {
         (<HTMLVideoElement>document.getElementById('localstream')).srcObject =
@@ -64,45 +89,94 @@ const webrtcPeerController = {
       peerConnection.onicecandidate = async (
         event: RTCPeerConnectionIceEvent
       ): Promise<void> => {
-        if (event.candidate && peerConnection.localDescription!.type === 'offer') {
+        if (
+          event.candidate &&
+          peerConnection.localDescription!.type === 'offer'
+        ) {
           appDispatch(
             newRequestWebRTCOfferSet(
-              JSON.stringify(peerConnection.localDescription) 
+              JSON.stringify(peerConnection.localDescription)
             )
           );
-        } else if (event.candidate && peerConnection.localDescription!.type === 'answer') {
+        } else if (
+          event.candidate &&
+          peerConnection.localDescription!.type === 'answer'
+        ) {
           appDispatch(
             newRequestWebRTCAnswerSet(
-              JSON.stringify(peerConnection.localDescription) 
+              JSON.stringify(peerConnection.localDescription)
+            )
+          );
+        }
+      };
+    } else if (newRequestWebRTC.webRTCDataChannel === 'Audio') {
+      let localStream = await navigator.mediaDevices.getUserMedia({
+        video: false,
+        audio: true,
+      });
+
+      if (document.getElementById('localstream')) {
+        (<HTMLVideoElement>document.getElementById('localstream')).srcObject =
+          localStream;
+      }
+
+      localStream.getTracks().forEach((track) => {
+        peerConnection.addTrack(track, localStream);
+      });
+
+      let remoteStream = new MediaStream();
+      peerConnection.ontrack = async (event) => {
+        event.streams[0].getTracks().forEach((track) => {
+          remoteStream.addTrack(track);
+        });
+      };
+
+      appDispatch(
+        newRequestWebRTCSet({
+          ...newRequestWebRTC,
+          webRTCpeerConnection: peerConnection,
+          webRTCLocalStream: localStream,
+          webRTCRemoteStream: remoteStream,
+        })
+      );
+
+      peerConnection.onicecandidate = async (
+        event: RTCPeerConnectionIceEvent
+      ): Promise<void> => {
+        if (
+          event.candidate &&
+          peerConnection.localDescription!.type === 'offer'
+        ) {
+          appDispatch(
+            newRequestWebRTCOfferSet(
+              JSON.stringify(peerConnection.localDescription)
+            )
+          );
+        } else if (
+          event.candidate &&
+          peerConnection.localDescription!.type === 'answer'
+        ) {
+          appDispatch(
+            newRequestWebRTCAnswerSet(
+              JSON.stringify(peerConnection.localDescription)
             )
           );
         }
       };
     } else if (newRequestWebRTC.webRTCDataChannel === 'Text') {
-    //     const { request, response } = currentReqRes as {
-    //   request: RequestWebRTCText;
-    //   response: ResponseWebRTCText;
-    // };
-
       let localStream = peerConnection.createDataChannel('textChannel');
       localStream.onopen = () => console.log('data channel opened!!!');
       localStream.onclose = () => console.log('data channel closed :(');
 
       peerConnection.ondatachannel = (event) => {
         const receiveChannel = event.channel;
-        // receiveChannel.onmessage = (event) => {
-        //   console.log('message received:', event.data);
-          
-        // };
-        receiveChannel.onmessage = (
-          event: MessageEvent
-        ) => {
+        receiveChannel.onmessage = (event: MessageEvent) => {
           let newString = event.data.slice(1, -1);
           let messageObject = {
             data: newString,
             timeReceived: Date.now(),
           };
-  
+
           let state = store.getState();
           if (state.reqRes.currentResponse.response) {
             let newWebRTCMessages = (<ResponseWebRTCText>(
@@ -132,14 +206,25 @@ const webrtcPeerController = {
       peerConnection.onicecandidate = async (
         event: RTCPeerConnectionIceEvent
       ): Promise<void> => {
-        if (event.candidate && peerConnection.localDescription!.type === 'offer') { //debugged
+        if (
+          event.candidate &&
+          peerConnection.localDescription!.type === 'offer'
+          // newRequestWebRTC.webRTCWebsocketServer === ''
+        ) {
+          // socket.emit('offer', JSON.stringify(peerConnection.localDescription));
+          //debugged
           appDispatch(
             newRequestWebRTCOfferSet(
               //should we be adding a ...peerConnection here spreading out the rest of the peerConnection object? also why isn't this updating the newWebRTCRequest object?
               JSON.stringify(peerConnection.localDescription)
             )
           );
-        } else if (event.candidate && peerConnection.localDescription!.type === 'answer') {//added this plus an answerSet reducer so the answer wasn't populating both the answer and offer text boxes (and being two different versions of the answer at that)
+        } else if (
+          event.candidate &&
+          peerConnection.localDescription!.type === 'answer'
+        ) {
+          //added this plus an answerSet reducer so the answer wasn't populating both the answer and offer text boxes (and being two different versions of the answer at that)
+          // socket.emit('answer', JSON.stringify(peerConnection.localDescription));
           appDispatch(
             newRequestWebRTCAnswerSet(
               JSON.stringify(peerConnection.localDescription)
@@ -163,6 +248,7 @@ const webrtcPeerController = {
         webRTCOffer: JSON.stringify(offer),
       })
     );
+    
   },
 
   createAnswer: async (newRequestWebRTC: RequestWebRTC): Promise<void> => {
@@ -198,8 +284,6 @@ const webrtcPeerController = {
     (<RequestWebRTCText>request).webRTCLocalStream!.send(
       JSON.stringify({ data: messages })
     );
-
-   
   },
 
   dataStream: async (reqRes: ReqRes): Promise<void> => {
