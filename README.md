@@ -21,7 +21,7 @@ Swell is a one-stop shop for sending and monitoring your API requests:
 
 - Send and monitor streams over HTTP/2 (including SSEs) and WebSockets
 - Create GraphQL queries, introspections, mutations, and subscriptions
-- Test WebRTC applications over video and text channels
+- Test WebRTC applications over video, audio and text channels
 - Stress testing HTTP/2 and GraphQL endpoints
 - Create your own HTTP/2 mock server
 - Store workspaces of multiple requests for later use
@@ -92,6 +92,7 @@ We highly encourage you to check out the `DEV-README.md` in the `docs` folder. W
 
   <img src="./ReadMeGifs/Gifs/FileUploadAndDarkMode.gif"
        style="display: block; margin: 10px auto 30px; border: 1px solid black;" />
+
 ## Experimental Features
 
 - _Mock Server_: Swell allows you to create your own HTTP/2 mock server to facilitate front-end development without depending on a fully built backend server.
@@ -99,7 +100,7 @@ We highly encourage you to check out the `DEV-README.md` in the `docs` folder. W
 
 - _Webhooks_: Swell includes user-defined HTTP callback connection testing designed to test other server's connection to the web and ability to send data. The test insures that when an event occurs, the source site makes an HTTP request to the URL configured for the webhook.
 
-- _WebRTC_: Swell makes it easy to test WebRTC applications for both video and text channels. Currently Swell supports manual entry of SDPs. 
+- _WebRTC_: Swell makes it easy to test WebRTC applications for both video and text channels. Currently Swell supports manual entry of SDPs.
   <img src="./ReadMeGifs/Gifs/webrtc.gif" style="display: block; margin: 10px auto 30px; " />
 
 - _OpenAPI_: Swell supports the enumeration and execution of REST and RPC API requests as defined in a user-provided OpenAPI document.
@@ -125,6 +126,7 @@ We highly encourage you to check out the `DEV-README.md` in the `docs` folder. W
 - Playwright
 
 ## Authors
+
 - **Isaac Mbambo** - [IM236](https://github.com/IM236)
 - **Kiki Hunt** - [Iloveeverything](https://github.com/Iloveeverything)
 - **Ting Lee** - [tingEng](https://github.com/tingEng)
