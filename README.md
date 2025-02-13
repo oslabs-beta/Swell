@@ -68,6 +68,34 @@ We highly encourage you to check out the `DEV-README.md` in the `docs` folder. W
 
   See [tRPC docs](https://trpc.io/docs/) for more information on sending tRPC requests or setting up a tRPC server.
 
+
+- _WebRTC_: Swell makes it easy to test WebRTC applications for video, audio and text channels. Currently Swell supports manual entry of SDPs.
+
+  ### Walkthrough for setting up a text channel connection using the app's generated offer and answer:
+
+  - Step 1
+    Caller: Generate an offer by clicking “Get Offer.” Copy the offer to your computer's clipboard and send it to recipient (we recommend sending by email).
+  - Step 2
+    Recipient: Copy the offer you received from the caller and paste it into the offer box (the top text box)
+  - Step 3
+    Recipient: Click “Get answer” button, generate an answer and copy it to your computer's clipboard. Send it to caller (email recommended)
+  - Step 4
+    Caller: Copy answer to your computer's clipboard and paste it into the answer box (bottom text box).
+  - Step 5
+    Caller: Click the “add answer” button. Now the connection is open!
+  - Step 6
+    Caller: Click “add to workspace” button.
+  - Step 7
+    Recipient: Click “add to workspace” button.
+  - Step 8
+    Caller: Click "Send" button on the left-hand side of the app.
+  - Step 9
+    Recipient: Click "Send" button on the left-hand side of the app.
+  - Step 10
+    Send and receive text messages via the response panel at the bottom of the app.
+  <img src="./ReadMeGifs/Gifs/webrtc.gif" style="display: block; margin: 10px auto 30px; " />
+
+
 ## Additional features
 
 - _Stress testing for HTTP/2 and GraphQL_: Test your server backend with Swell's stress testing feature to ensure your server can manage expected and unexpected loads accordingly
@@ -99,30 +127,6 @@ We highly encourage you to check out the `DEV-README.md` in the `docs` folder. W
   <img src="./ReadMeGifs/Gifs/MockServer.gif" style="display: block;  margin: 10px auto 30px;" />
 
 - _Webhooks_: Swell includes user-defined HTTP callback connection testing designed to test other server's connection to the web and ability to send data. The test insures that when an event occurs, the source site makes an HTTP request to the URL configured for the webhook.
-
-- _WebRTC_: Swell makes it easy to test WebRTC applications for video, audio and text channels. Currently Swell supports manual entry of SDPs.
-
-### Here are the steps of text testing:
-
-- Step 1
-  Caller : Generate an offer by clicking “Get Offer”. Copy to clipboard, paste and send to recipient (email recommended)
-- Step 2
-  Recipient: Copy offer received and paste into the top box
-- Step 3
-  Recipient: Click “get answer” button, generate an answer and copy to clipboard. Send answer to caller (email recommended)
-- Step 4
-  Caller: Copy answer to clipboard and paste into lower box.
-- Step 5
-  Caller: Click “add answer” button. Connection will open!
-- Step 6
-  Caller: Click “add to workspace” Button
-- Step 7
-  Recipient: Click “add to workspace” Button
-- Step 8
-  Caller: Click Send Button at the left side
-- Step 9
-  Recipient: Click Send Button at the left side
-  <img src="./ReadMeGifs/Gifs/webrtc.gif" style="display: block; margin: 10px auto 30px; " />
 
 - _OpenAPI_: Swell supports the enumeration and execution of REST and RPC API requests as defined in a user-provided OpenAPI document.
   <img src="./ReadMeGifs/Gifs/openapi.gif" style="display: block; margin: 10px auto 30px;" />

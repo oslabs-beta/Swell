@@ -43,6 +43,33 @@ Thank you for your consideration and let's work together on making Swell one of 
 ## How to download and test the application locally?
 
 1. Fork and/or clone the repository into your local machine
+2. Update dependencies
+- <u>`isolated-vm` combined fix</u>: There is a problem with `vm2` (a sandbox); it has vulnerabilities and was discontinued.  An alternative is `isolated-vm` which uses the chromium browser's v8 engine. The prior version of `isolated-vm` on Swell's package.json was only compatible with Node 16. In order to upgrade to the latest version we ran the commands as
+- We are using Node 18 instead of the most recent version of Node because of C++ compatibility with the Xcode command line. 
+- `node-gyp` is a tool for compiling native add-on modules for Node.js. It is often used when installing certain npm packages that require native code compilation.
+A. If you have them, delete node modules, package-lock.json and dist folder
+Fix for continuously bug —Node 16 Node 18 and 20
+Cd in User directory:
+curl -o- https://raw.githubusercontent.com/nvm-sh/nvm/v0.40.1/install.sh | bash
+
+Installs nvm package so you can manage versions
+Making it so I can run nvm install command inside of the terminal 
+Still in user folder
+source ~/.bashrc  # or ~/.zshrc or ~/.bash_profile
+
+
+nvm install 18
+
+
+
+nvm use 18
+
+
+
+npm install -g node-gyp
+
+
+
 2. In your terminal:
    - `npm install`, then
    - `npm run dev`
@@ -111,6 +138,7 @@ From a functionality standpoint:
 - HTTP/2 stress testing with `GET` requests
 - GraphQL stress testing with `Query`
 - Mock server for HTTP/2 (`Express`)
+- WebRTC testing for text, video, and audio channel connections
 - Ability to store historical requests and create/delete workspaces
 - Frontend conversion to TypeScript
 - From a codebase standpoint:
@@ -214,7 +242,6 @@ In a recent iteration, the WebRTC feature was changed from STUN Server testing t
 
 Areas for improvement:
 
-- Currently, our WebRTC only works as the connection initiator. The next step would be the `Add Answer` button which allows Swell to be on the receiver end of the connection.
 - Currently, our WebRTC end-to-end testing is read-only from the previous implementation. It would be a highly valuable addition to modify the old testing to test the current implementation of webRTC. Integration testing has been started but needs to be finished. Relevant files include
   - End-to-End:'test/**tests**/subSuites/webRTCTest.js'
   - Integration: 'test/**tests**/IntegrationTests/webRTCIntegrationTests'
