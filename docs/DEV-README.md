@@ -52,7 +52,7 @@ Thank you for your consideration and let's work together on making Swell one of 
       2. `cd` into User directory;
       3. `curl -o- https://raw.githubusercontent.com/nvm-sh/nvm/v0.40.1/install.sh | bash` (installing nvm package so you can manage versions, and making it so you can run `nvm install` command inside of the terminal)
       4. While still in user folder: `source ~/.bashrc  # or ~/.zshrc or ~/.bash_profile`
-      5. `vm install 18`
+      5. `nvm install 18`
       6. `nvm use 18`
       7. `npm install -g node-gyp`
 
