@@ -47,6 +47,8 @@ jobs:
         make boostrap
         make release
         npm run build
+
+        
       
     # Initializes the CodeQL tools for scanning.
     - name: Initialize CodeQL
