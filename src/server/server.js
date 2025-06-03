@@ -4,6 +4,7 @@ const ngrok = require('ngrok');
 const dotenv = require('dotenv');
 const cookieParser = require('cookie-parser');
 const crypto = require('crypto');
+const { app, BrowserWindow, ipcMain, protocol } = require('electron');
 dotenv.config();
 
 const port = 3000;

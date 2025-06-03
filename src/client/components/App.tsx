@@ -1,4 +1,6 @@
 // Base React and React Router scaffolding
+import OAuth2TokenManager from './OAuth2TokenManager';
+
 import React, { useState, useEffect } from 'react';
 import Split from 'react-split';
 import { HashRouter } from 'react-router-dom';
